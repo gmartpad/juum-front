@@ -1,4 +1,4 @@
-import { Typography, FormControl, FormLabel, Box, RadioGroup, Radio, FormControlLabel, Select, MenuItem, Button, FormGroup, FormHelperText } from '@mui/material'
+import { Typography, FormLabel, Box, Button } from '@mui/material'
 import { useFormik } from 'formik'
 import { useCallback } from 'react'
 import { Link } from 'react-router-dom'
@@ -6,6 +6,8 @@ import * as Yup from 'yup'
 import NumberInput from '../../components/NumberInput'
 import RadioGroupInput from '../../components/RadioGroupInput'
 import CustomSelectInput from '../../components/CustomSelectInput'
+import { useRecoilState } from 'recoil'
+import { REEFormValuesAtom } from '../../store/atoms'
 
 // 
 
@@ -44,19 +46,9 @@ export type REEFormType = {
     PAS: PASType
 }
 
-const INITIAL_VALUES = {
-    unitType: 'imperial',
-    sex: '',
-    age: '',
-    heightFeet: '',
-    heightInches: '',
-    heightCentimeters: '',
-    weightPounds: '',
-    weightKilograms: '',
-    PAS: ''
-}
-
 const HomePage = () => {
+    const [reeFormValue, setREEFormValue] = useRecoilState(REEFormValuesAtom)
+
     const REEValidationSchema = Yup.object({
         unitType: Yup.mixed<UnitType>().oneOf([...unitTypes]).required('Required'),
         sex: Yup.mixed<SexType>().oneOf([...sexTypes]).required('Required'),
@@ -250,16 +242,17 @@ const HomePage = () => {
             finalREE = REEBeforeFactor * PASFactor
         }
 
+        setREEFormValue(values)
 
         console.log('PASFactor: ', PASFactor)
         console.log('REEBeforeFactor: ', REEBeforeFactor)
         console.log('finalREE: ', finalREE) // Maintain Weight
         console.log('finalREE * 0.8: ', finalREE * 0.8) // Lose Weight
         console.log('finalREE * 0.6: ', finalREE * 0.6) // Lose Weight Fast
-    }, [physicalActivityStatusFactor])
+    }, [physicalActivityStatusFactor, setREEFormValue])
 
     const REEFormik = useFormik({
-        initialValues: INITIAL_VALUES as REEFormType,
+        initialValues: reeFormValue as REEFormType,
         validationSchema: REEValidationSchema,
         onSubmit: handleREEFormikSubmit
     })

@@ -4,7 +4,7 @@ import {
     // Route,
     Link,
 } from "react-router-dom"
-import HomePage from "./Home"
+import HomePage from "@pages/Home"
 
 const router = createBrowserRouter([
     {

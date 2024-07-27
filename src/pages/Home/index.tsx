@@ -4,6 +4,8 @@ import { useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
 import NumberInput from '../../components/NumberInput'
+import RadioGroupInput from '../../components/RadioGroupInput'
+import CustomSelectInput from '../../components/CustomSelectInput'
 
 // 
 
@@ -283,54 +285,29 @@ const HomePage = () => {
                         mx: 'auto'
                     }}
                 >
-                    <FormControl error={!!errors?.unitType}>
-                        <FormLabel id="unit-label" sx={{ mt: 1 }}>Select your Unit Type:</FormLabel>
-                        <RadioGroup
-                            sx={{ mt: 1, mb: 1 }}
-                            row
-                            id="unitType"
-                            name="unitType"
-                            aria-labelledby="unit-label"
-                            value={values.unitType}
-                            onChange={handleChange}
-                        >
-                            <FormControlLabel value="imperial" control={<Radio/>} label="U.S. (Imperial)" />
-                            <FormControlLabel value="metric" control={<Radio/>} label="Metric"/>
-                        </RadioGroup>
-                        <FormHelperText>{errors?.unitType}</FormHelperText>
-                    </FormControl>
-                    <FormControl error={!!errors?.sex}>
-                        <FormGroup>
-                            <Select
-                                sx={{ mt: 1, mb: errors?.sex ? 0 : 1 }}
-                                id="sex"
-                                name="sex"
-                                displayEmpty
-                                value={values.sex}
-                                onChange={handleChange}
-                                renderValue={(selected) => {
-                                    if(!selected) {
-                                        return <em>Sex</em>
-                                    }
-
-                                    return selected
-                                }}
-                            >
-                                <MenuItem disabled value="">
-                                    <em>Sex</em>
-                                </MenuItem>
-                                {sexTypes.filter((sex) => sex).map((sex) => (
-                                    <MenuItem
-                                        key={sex}
-                                        value={sex}
-                                    >
-                                        {sex}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            <FormHelperText sx={{ mb: errors?.sex ? 1 : 0 }}>{errors?.sex}</FormHelperText>
-                        </FormGroup>
-                    </FormControl>
+                    <RadioGroupInput
+                        error={errors?.unitType}
+                        formLabelId='unit-label'
+                        formLabelText='Select your Unit Type:'
+                        radioGroupId='unitType'
+                        radioGroupName='unitType'
+                        radioGroupAriaLabelledBy='unit-label'
+                        value={values.unitType}
+                        handleChange={handleChange}
+                        radioOptions={[
+                            { value: 'imperial', label: 'U.S. (Imperial)'},
+                            { value: 'metric', label: 'Metric' }
+                        ]}
+                    />
+                    <CustomSelectInput
+                        error={errors?.sex}
+                        selectId='sex'
+                        selectName='sex'
+                        value={values.sex}
+                        handleChange={handleChange}
+                        EmptyOptionElement={() => <em>Sex</em>}
+                        options={sexTypes}
+                    />
                     <NumberInput
                         label="Age"
                         id="age"
@@ -339,7 +316,6 @@ const HomePage = () => {
                         handleChange={handleChange}
                         error={errors?.age}
                     />
-
                     <FormLabel id="height-inputs" sx={{ mt: 1 }}>Height:</FormLabel>
                     {values.unitType === 'imperial' ? (
                         <Box display="flex" gap={2}>
@@ -398,40 +374,17 @@ const HomePage = () => {
                         />
                     )}
 
-                    <FormControl error={!!errors?.PAS}>
-                        <FormGroup>
-                            <FormLabel id="select-physical-activity-status" sx={{ mt: 1 }}>Physical Activity Status:</FormLabel>
-                            <Select
-                                sx={{ mt: 1, mb: errors?.PAS ? 0 : 1 }}
-                                id="PAS"
-                                name="PAS"
-                                aria-labelledby="select-physical-activity-status"
-                                displayEmpty
-                                value={values.PAS}
-                                onChange={handleChange}
-                                renderValue={(selected) => {
-                                    if(!selected) {
-                                        return <em>Physical Activity</em>
-                                    }
-
-                                    return selected
-                                }}
-                            >
-                                <MenuItem disabled value="">
-                                    <em>Physical Activity</em>
-                                </MenuItem>
-                                {PASTypes.filter((pas) => pas).map((physicalActivityStatus) => (
-                                    <MenuItem
-                                        key={physicalActivityStatus}
-                                        value={physicalActivityStatus}
-                                    >
-                                        {physicalActivityStatus}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            <FormHelperText sx={{ mb: errors?.PAS ? 1 : 0 }}>{errors?.PAS}</FormHelperText>
-                        </FormGroup>
-                    </FormControl>
+                    <CustomSelectInput
+                        error={errors?.PAS}
+                        formLabelId='select-physical-activity-status'
+                        formLabelText='Physical Activity Status:'
+                        selectId='PAS'
+                        selectName='PAS'
+                        value={values.PAS}
+                        handleChange={handleChange}
+                        EmptyOptionElement={() => <em>Physical Activity</em>}
+                        options={PASTypes}
+                    />
                     <Button variant='contained' color='success' type='submit'>
                         Calculate REE
                     </Button>

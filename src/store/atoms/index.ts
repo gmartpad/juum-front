@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
-import localStorageEffect from '../effects/localStorageEffect' 
-import { REEFormType } from '../../pages/Home'
+import localStorageEffect from '@store/effects/localStorageEffect' 
+import { REEFormType } from '@pages/Home'
 
 type REEFormValuesAtomType = REEFormType
 

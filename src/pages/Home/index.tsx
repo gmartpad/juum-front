@@ -3,11 +3,11 @@ import { useFormik } from 'formik'
 import { useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
-import NumberInput from '../../components/NumberInput'
-import RadioGroupInput from '../../components/RadioGroupInput'
-import CustomSelectInput from '../../components/CustomSelectInput'
+import NumberInput from '@components/NumberInput'
+import RadioGroupInput from '@components/RadioGroupInput'
+import CustomSelectInput from '@components/CustomSelectInput'
 import { useRecoilState } from 'recoil'
-import { REEFormValuesAtom } from '../../store/atoms'
+import { REEFormValuesAtom } from '@store/atoms'
 
 // 
 
@@ -258,8 +258,6 @@ const HomePage = () => {
     })
 
     const { values, errors, handleSubmit, handleChange } = REEFormik
-
-   
 
     return (
         <div>

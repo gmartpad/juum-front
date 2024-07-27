@@ -1,6 +1,6 @@
 // import { useState } from 'react'
 import { RecoilRoot } from 'recoil'
-import PageRouter from './pages'
+import PageRouter from '@pages/index'
 
 function App() {
   // const [count, setCount] = useState(0)

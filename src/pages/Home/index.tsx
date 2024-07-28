@@ -242,13 +242,18 @@ const HomePage = () => {
             finalREE = REEBeforeFactor * PASFactor
         }
 
-        setREEFormValue(values)
+        const maintenanceCalorieEnergyExpenditure = finalREE
+        const weightLossCalorieEnergyExpenditure = finalREE * 0.8
+        const rapidWeightLossCalorieEnergyExpenditure = finalREE * 0.6
 
-        console.log('PASFactor: ', PASFactor)
-        console.log('REEBeforeFactor: ', REEBeforeFactor)
-        console.log('finalREE: ', finalREE) // Maintain Weight
-        console.log('finalREE * 0.8: ', finalREE * 0.8) // Lose Weight
-        console.log('finalREE * 0.6: ', finalREE * 0.6) // Lose Weight Fast
+        setREEFormValue({
+            ...values,
+            REEBeforeFactor,
+            PASFactor,
+            maintenanceCalorieEnergyExpenditure,
+            weightLossCalorieEnergyExpenditure,
+            rapidWeightLossCalorieEnergyExpenditure
+        })
     }, [physicalActivityStatusFactor, setREEFormValue])
 
     const REEFormik = useFormik({
@@ -380,9 +385,6 @@ const HomePage = () => {
                         Calculate REE
                     </Button>
                 </Box>
-                
-                <p>Physical Activity Status Factor: {physicalActivityStatusFactor(values.PAS)}</p> 
-                <p>errors: {JSON.stringify(errors)}</p>
             </form>
         </div>
     )

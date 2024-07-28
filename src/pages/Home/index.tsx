@@ -8,6 +8,7 @@ import RadioGroupInput from '@components/RadioGroupInput'
 import CustomSelectInput from '@components/CustomSelectInput'
 import { useRecoilState } from 'recoil'
 import { REEFormValuesAtom } from '@store/atoms'
+import { Container } from './styled'
 
 // 
 
@@ -265,22 +266,13 @@ const HomePage = () => {
     const { values, errors, handleSubmit, handleChange } = REEFormik
 
     return (
-        <div>
+        <section>
             <Link to="about">About Us</Link>
             <Typography variant='h2'> 
                 Resting Energy Expenditure
             </Typography>
             <form onSubmit={handleSubmit}>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        minWidth: 300,
-                        maxWidth: 1366,
-                        width: 1,
-                        mx: 'auto'
-                    }}
-                >
+                <Container>
                     <RadioGroupInput
                         error={errors?.unitType}
                         formLabelId='unit-label'
@@ -384,9 +376,9 @@ const HomePage = () => {
                     <Button variant='contained' color='success' type='submit'>
                         Calculate REE
                     </Button>
-                </Box>
+                </Container>
             </form>
-        </div>
+        </section>
     )
 }
 
